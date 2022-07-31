@@ -1,0 +1,33 @@
+import random
+
+from flask import Flask
+from markupsafe import escape
+
+app = Flask(__name__)
+number = random.randint(0,9)
+print(number)
+
+@app.route('/')
+def home():
+    return f"<h1>Guess a number between 0 and 9</h1>" \
+           f"<img src='https://media.giphy.com/media/1YeNJK6FptDdq1q59K/giphy.gif'>"
+
+
+@app.route("/<int:guess>")
+def guess_number(guess):
+    if guess < number:
+        return "<h1>The number is too small</h1>" \
+               "<img src='https://media.giphy.com/media/d2Z4V5Zey8FXHYwo/giphy.gif'>"
+
+    elif guess > number:
+        return "<h1>The number is too big</h1>" \
+               "<img src='https://media.giphy.com/media/CUe2pyv7sNUkM/giphy.gif'>"
+
+    else:
+        return "<h1>Correct!</h1>" \
+               "<img src='https://media.giphy.com/media/NkJEXWDr7KsG4/giphy.gif'>"
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
